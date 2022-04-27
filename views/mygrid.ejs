@@ -14,8 +14,21 @@
 <body>
     <div class='container'>
         <main>
-            <h1><a href="/admin"><i class="fas fa-backspace"></i></a> Notícias - MyGrid</h1>
-            <h3>Adicionar Notícias</h3>
+            <nav class="navbar navbar-light bg-light">
+                <div class="container-fluid">
+                  <a class="navbar-brand" href="/admin">  
+                    <i class="fas fa-backspace"></i>
+                    ADMIN
+                  </a>
+                </div>
+              </nav>
+
+            <br>
+
+            <h3>Gravar Notícia</h3>
+
+            <br>
+
             <form action="" method="post">
                 <label for="titulo">Título:</label>
                 <input class="form-control " type="text" name="titulo" id="titulo" required><br>
@@ -23,6 +36,7 @@
                 <textarea class="form-control form-control-sm" name="texto" id="texto" cols="30" rows="10" required></textarea><br>
                 <input type="submit" class="btn btn-outline-success" value="Gravar">
             </form>
+            <br>
             <h3>Listar Notícias</h3>
             <table class="table table-striped">
                 <tr>
@@ -38,8 +52,8 @@
                         <td>
                             <%=dados[n].texto%>
                         </td>
-                        <td>Alterar</td>
-                        <td><a href="/mygrid_excluir?id=<%=dados[n]._id%>">Exluir</a></td>
+                        <td><a href="/mygrid_alterar?id=<%=dados[n]._id%>" class="btn btn-outline-info">Alterar</a></td>
+                        <td><a href="/mygrid_excluir?id=<%=dados[n]._id%>" class="btn btn-outline-danger">Exluir</a></td>
                     </tr>
                     <% } %>
             </table>

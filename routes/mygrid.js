@@ -54,4 +54,15 @@ module.exports = (app)=>{
         //valtar pra página mygrid
         res.redirect('/mygrid')
     })
+
+    //listar o documento para o alterar
+    app.get('/mygrid_alterar', async(req,res)=>{
+        //recuperar o id da barra de endereço
+        var id = req.query.id
+        //procurar o documento específico
+        var procurar = await modelo.findOne({_id:id})
+        //abrir a view mygrid_alterar e enviar a json do documento
+        res.render('mygrid_alterar.ejs', {dados:procurar})
+    })
+    
 }
