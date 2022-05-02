@@ -9,7 +9,7 @@ module.exports = (app)=>{
         //conectar com o database
         conexao()
         //buscar todos os documentos da colecao mygrid
-        modelo.find()
+        modelo.find().sort({texto:-1})
         .then((modelo)=>{
             res.render('mygrid.ejs',{dados:modelo})
         })
@@ -75,7 +75,9 @@ module.exports = (app)=>{
         var alterar = await modelo.findOneAndUpdate(
             {_id:id},
             {titulo:dados.titulo, 
-            texto:dados.texto})
+            texto:dados.texto,
+            alterado: Date.now()
+        })
         //valtar pra página mygrid
         res.redirect('/mygrid')
     })
