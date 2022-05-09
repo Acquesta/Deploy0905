@@ -1,4 +1,5 @@
 var multer = require('multer')
+var fs = require('fs')
 
 module.exports = (app) => {
     //importar as configs do database
@@ -66,6 +67,9 @@ module.exports = (app) => {
                 //res.send("Tipo de arquivo inválido")
                 res.render('erros.ejs', { erro: "Tipo de Arquivo Inválido" })
             } else {
+                //excluir o arquivo anterior
+                fs.unlinkSync('uploads/' + req.body.anterior)
+
                 //conectar com o databaase
                 conexao()
                     //gravar o nome do arquivo na collection gallery
@@ -80,5 +84,32 @@ module.exports = (app) => {
             }
         })
 
+    })
+
+    //visualizar a imagem que sera excluida
+    app.get('/excluir_gallery', async(req,res)=>{
+        //recuperar o id da barra de endereçço
+        var id = req.query.id
+        //procurar  um  documento com o id
+        var procurar = await gallery.findOne({_id:id})
+        //exibir a imagem localizada
+        res.render('gallery_excluir.ejs',{dados:procurar})
+    })
+
+    app.post('/excluir_gallery', async(req,res)=>{
+
+        //excluir o arquivo 
+        fs.unlinkSync('uploads/' + req.body.anterior)
+
+        //conectar com o databaase
+        conexao()
+        
+        //recuperando o id da barra de endereço
+        var id = req.query.id
+        //excluindo a imagem na gallery
+        var excluir = await gallery.findOneAndRemove({_id:id})
+        //valtar pra página gallery
+        res.redirect('/gallery')
+       
     })
 }
